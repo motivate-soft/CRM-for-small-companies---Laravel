@@ -1,0 +1,87 @@
+<div class="box box-primary">
+    <div class="box-body">
+        <div class="row">
+            <form action="" method="get">
+                <div class="col-lg-2 col-md-3 col-sm-3">
+                    <div class="form-group">
+                        <label>{{ trans('fields.employee') }}</label>
+                        <select class="form-control select2" name="employee">
+                            <option value="all">{{ trans('fields.all') }}</option>
+                            @foreach(\App\Models\Employee::all() as $employee)
+                                <option value="{{ $employee->id }}" {{ $employee->id == $filters['employee'] ? 'selected=selected' : '' }}>{{ $employee->user->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-3">
+                    <div class="form-group">
+                        <label>{{ trans('fields.work_center') }}</label>
+                        <select class="form-control select2" name="workcenter">
+                            <option value="all">{{ trans('fields.all') }}</option>
+                            @foreach(\App\Models\Workcenter::all() as $workcenter)
+                                <option value="{{ $workcenter->id }}" {{ $workcenter->id == $filters['workcenter'] ? 'selected=selected' : '' }}>{{ $workcenter->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-3">
+                    <div class="form-group">
+                        <label>{{ trans('fields.year') }}</label>
+                        <input class="form-control pull-right" id="datepicker" type="text" name="year" autocomplete="off" value="{{ $filters['year'] }}">
+                    </div>
+                </div>
+                <div class="col-lg-1 col-md-2 col-sm-3">
+                    <div class="form-group">
+                        <label>&nbsp;</label>
+                        <button type="submit" class="btn btn-primary form-control"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-2 col-md-4 col-sm-6">
+                <div class="callout callout-purple bg-purple m-b-0">
+                    <h4 class="m-b-0">{{ trans('fields.total_time') }}: {{ $total_time }}</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@push('after_styles')
+    <link href="{{ asset('vendor/backpack/select2/select2.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('vendor/backpack/select2/select2-bootstrap-dick.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('vendor/adminlte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css') }}">
+@endpush
+
+@push('after_scripts')
+    <script src="{{ asset('vendor/backpack/select2/select2.js') }}"></script>
+    <script src="{{ asset('vendor/adminlte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
+    <script>
+        jQuery(document).ready(function($) {
+            $('.select2').each(function (i, obj) {
+                if (!$(obj).data("select2"))
+                {
+                    $(obj).select2({
+                        allowClear: true,
+                        closeOnSelect: false
+                    });
+                }
+            });
+
+            var dateInput = $('#datepicker').datepicker({
+                format: "yyyy",
+                weekStart: 1,
+                startDate : new Date(2009,1-1,1,0,0,0),
+                endDate : new Date(),
+                startView: 1,
+                minViewMode: 2,
+                maxViewMode: 3,
+                language: "en",
+                autoclose: true
+            })
+
+        });
+    </script>
+@endpush

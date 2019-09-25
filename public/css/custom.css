@@ -1,0 +1,15 @@
+.btn-app:first-child {
+    margin-left: 0;
+}
+
+.btn-app {
+    margin: 0 10px 0 0;
+}
+
+#accordion .box-title {
+    display: block;
+}
+
+.callout.callout-purple {
+    border-color: #383871;
+}
